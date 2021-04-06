@@ -1,0 +1,34 @@
+{{negocio.nombre}}
+
+<form class="form" method="post">
+    {% csrf_token %}
+
+    <label for="fecha_inicio">Inicio</label>
+    <input type="date" name="fecha_inicio">
+    <br>
+    <label for="fecha_final">Final</label>
+    <input type="date" name="fecha_final">
+    <br>
+    <label for="1H">1H</label>
+    <input type="checkbox" id="1H" name="1H">
+    <label for="6H">6H</label>
+    <input type="checkbox" id="6H" name="6H">
+    <label for="12H">12H</label>
+    <input type="checkbox" id="12H" name="12H">
+    <label for="1D">1D</label>
+    <input type="checkbox" id="1D" name="1D">
+    <label for="1S">1S</label>
+    <input type="checkbox" id="1S" name="1S">
+    <label for="1M">1M</label>
+    <input type="checkbox" id="1M" name="1M">
+    <label for="6M">6M</label>
+    <input type="checkbox" id="6M" name="6M">
+    <label for="1A">1A</label>
+    <input type="checkbox" id="1A" name="1A">
+    <br>
+    <button type="submit">aplicar</button>
+</form>
+
+{% for dato in lista %}
+    <div>{{dato}}</div>
+{% endfor %}

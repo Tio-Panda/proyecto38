@@ -1,0 +1,19 @@
+<form class="form" method="post">
+    {% csrf_token %}
+
+    {% for negocio in negocios %}
+        <label for="{{negocio}}">Selecciona a que opción corresponde a {{negocio}}</label>
+
+        <select name="{{negocio}}" id="{{negocio}}">
+            {% for nombre in nombres %}
+                <option value="{{nombre}}">{{nombre}}</option>
+            {% endfor %}
+                <option value="null">-------------</option>
+        </select>
+
+        <br>
+    {% endfor %}
+
+    <button type="submit">Guardar</button>
+</form>
+

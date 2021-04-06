@@ -1,0 +1,14 @@
+INDEX
+<span>
+    {% if user.is_authenticated %}
+        <span>Hola {{user.username}}!</span>
+        <span><a href="{% url 'logout' %}">Logout</a></span>
+    {% else %}
+        <span><a href="{% url 'login' %}">Login</a></span>
+    {% endif %}
+</span>
+<span>
+    <a href="{% url 'mis_negocios' %}">Mis Negocios</a>
+</span>
+
+

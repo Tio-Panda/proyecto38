@@ -1,0 +1,14 @@
+<span>
+    <a href="{% url 'añadir_negocio' %}">Añadir Negocio</a>
+</span>
+
+<ul>
+    {% for negocio in negocios %}
+        <li><a href="{% url 'negocio' id_negocio=negocio.id %}">{{negocio}}</a></li>
+    {% endfor %}
+</ul>
+
+<span>
+    <button><a href="{% url 'actualizar' metodo='transbank' %}">Trasbank</a></button>
+    
+</span>
