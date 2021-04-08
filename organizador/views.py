@@ -54,10 +54,16 @@ def negocio(request, id_negocio):
         fecha_final = seleccion['fecha_final']
         aux = list(seleccion.keys())
         intervalo = aux[3]
+        print(intervalo)
+        print(fecha_inicio)
+        print(fecha_final)
         
-        lista = mostrar_info(negocio.transbank, fecha_inicio, fecha_final, intervalo)
+        k = mostrar_info(negocio.transbank, fecha_inicio, fecha_final, intervalo)
+
+        print(k)
+        
     
-    context = {'negocio' : negocio, 'lista' : "lista"}
+    context = {'negocio' : negocio, 'fecha' : k['fecha'], 'neto' : k['neto'], 'iva' : k['iva'], 'total' : k['total'], 'volumen' : k['volumen']}
     return render(request, 'negocio.html', context)
 
 def actualizar_transbank(request, metodo):

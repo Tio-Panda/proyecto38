@@ -9,26 +9,37 @@
     <label for="fecha_final">Final</label>
     <input type="date" name="fecha_final">
     <br>
-    <label for="1H">1H</label>
-    <input type="checkbox" id="1H" name="1H">
-    <label for="6H">6H</label>
-    <input type="checkbox" id="6H" name="6H">
-    <label for="12H">12H</label>
-    <input type="checkbox" id="12H" name="12H">
-    <label for="1D">1D</label>
-    <input type="checkbox" id="1D" name="1D">
-    <label for="1S">1S</label>
-    <input type="checkbox" id="1S" name="1S">
-    <label for="1M">1M</label>
-    <input type="checkbox" id="1M" name="1M">
-    <label for="6M">6M</label>
-    <input type="checkbox" id="6M" name="6M">
-    <label for="1A">1A</label>
-    <input type="checkbox" id="1A" name="1A">
+    <label for="H">1H</label>
+    <input type="checkbox" id="H" name="H">
+    <label for="D">1D</label>
+    <input type="checkbox" id="D" name="D">
+    <label for="W">1S</label>
+    <input type="checkbox" id="W" name="W">
+    <label for="Q">Cuartos</label>
+    <input type="checkbox" id="Q" name="Q">
+    <label for="Y">1Y</label>
+    <input type="checkbox" id="Y" name="Y">
     <br>
     <button type="submit">aplicar</button>
 </form>
 
-{% for dato in lista %}
-    <div>{{dato}}</div>
-{% endfor %}
+<table class="tabla">
+    <tr>
+        <th>Fecha</th>
+        <th>Neto</th>
+        <th>Iva</th>
+        <th>Total</th>
+        <th>Volumen</th>
+        
+    </tr>
+    {% load templates_filters %}
+    {% for i in fecha %}
+        <tr>
+            <td>{{fecha|index:forloop.counter0}}</td>
+            <td>{{neto|index:forloop.counter0}}</td>
+            <td>{{iva|index:forloop.counter0}}</td>
+            <td>{{total|index:forloop.counter0}}</td>
+            <td>{{volumen|index:forloop.counter0}}</td>   
+        </tr>
+    {% endfor %}
+</table>

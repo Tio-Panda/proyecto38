@@ -76,14 +76,6 @@ def separar_csv_por_negocio(ruta_master):
 
     return nombres
 
-def sacar_fecha(string):
-    fecha = string[0:10]
-    return fecha
-
-def sacar_hora(string):
-    hora = string[11:19]
-    return hora
-
 def limpiar_fecha(string):
     fecha = string[0:10] + ":" + string[11:23]
     return fecha
@@ -125,46 +117,46 @@ def distribuir_csv_por_negocio(ruta_master, ruta_negocio, nombre_selecto):
 
 
 # Mostrador que te muestre ganancias por la fecha que tu elijas y los intervalos que tu elijas
-def ventas_dia():
-    return 0
+def organizar_intervalos(archivo, inter):
+    import pandas as pd
 
-def ventas_mes():
-    return 0
+    df = archivo
+    intervalo = df.index.to_period(inter)
 
-def ventas_año():
-    return 0
+    df_sum = df.groupby([intervalo]).sum()
 
-def ventas_totales():
-    return 0
+    df_nuevo = pd.DataFrame(columns=['fecha', 'neto', 'iva', 'total', 'volumen'])
 
-def ventas_por_fecha():
-    return 0
+    df_nuevo['fecha'] = df_sum.index
+    df_nuevo = df_nuevo.set_index(['fecha'])
 
-def ventas_por_hora():
-    # Ver cuantas boletas se sacan por hora en el dia
-    return 0
+    df_nuevo['neto'] = df_sum['neto']
+    df_nuevo['iva'] = df_sum['iva']
+    df_nuevo['total'] = df_sum['total']
+    df_nuevo['volumen'] = df.groupby([intervalo]).size()
 
-def agrupar_datos(data, intervalo):
-    df = []
-
-    #Separar el intervalo de mes por semana 1 semana 2 semana 3 semana 4
+    k = {'fecha' : df_nuevo.index, 'neto' : df_nuevo['neto'], 'iva' : df_nuevo['iva'], 'total' : df_nuevo['total'], 'volumen' : df_nuevo['volumen']}
+    
+    return k
 
 def mostrar_info(ruta_negocio, fecha_inicio, fecha_final, intervalo):
     import pandas as pd
+    #pd.options.mode.chained_assignment = None
 
-    context = {}
     negocio = pd.read_csv(ruta_negocio, sep=";")
     negocio = negocio.drop(['Unnamed: 0'], axis=1)
-    #negocio['fechas'] = pd.to_datetime(negocio['fechas'], format='%Y-%m-%d')
-    #negocio['horas'] = pd.to_datetime(negocio['horas'], format='%H:%M:%S')
 
-    #print((negocio['fechas'] >= fecha_inicio) & (negocio['fechas'] <= fecha_final))
-    datos_filtrados = negocio[negocio["fechas"].isin(pd.date_range(fecha_inicio, fecha_final))]
+    negocio['fecha'] = pd.to_datetime(negocio['fecha'], format='%Y-%m-%d:%H:%M:%S.%f')
+    negocio = negocio.set_index(['fecha'])
+    #print(negocio.shape)
 
-    lista = agrupar_datos(datos_filtrados, intervalo)
+    #dias = (negocio.index > fecha_inicio) & (negocio.index <= fecha_final)
+    #datos_filtrados = negocio.loc[dias]
+    datos_filtrados = negocio.loc[fecha_inicio:fecha_final]
+    #print(datos_filtrados.head(5))
+
+    #datos_filtrados = negocio[negocio["fecha"].isin(pd.date_range(fecha_inicio, fecha_final))]
+
+    k = organizar_intervalos(datos_filtrados, intervalo)
     
-
-
-
-
-# Mostrar data por intervalos de 1H 6H 12H 1D 1S 1M 1A
+    return k
